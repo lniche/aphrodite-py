@@ -36,10 +36,12 @@ Aphrodite 是一个基于 [full-stack-fastapi-template](https://github.com/fasta
 ```bash
 # 数据库
 deploy/db.sql
+alembic upgrade head
 
 # 配置文件
-mv config.toml.example config.toml
+cd config
+mv .env.example .env
 
 # 启动服务
-cargo run -- serve
+fastapi run --reload app/main.py
 ```
