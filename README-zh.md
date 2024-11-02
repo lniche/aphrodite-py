@@ -42,6 +42,10 @@ alembic upgrade head
 cd config
 mv .env.example .env
 
+pip install uv
+uv sync
+source .venv/bin/activate
+
 # 启动服务
 fastapi run --reload app/main.py
 ```
