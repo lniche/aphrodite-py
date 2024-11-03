@@ -20,3 +20,6 @@ htmlcov
 .cache
 .venv
 .env
+
+deploy/docker-compose/data
+deploy/docker-compose/logs
