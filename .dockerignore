@@ -1,8 +1,57 @@
-# Python
-__pycache__
-app.egg-info
-*.pyc
-.mypy_cache
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment directories
+venv/
+.env/
+.venv/
+*.env
+
+# Log files
+*.log
+logs/
+*.pid
+
+# Local development configuration files
+*.swp
+*.swo
+*.bak
+
+# Docker and Docker Compose files
+docker-compose*.yml
+Dockerfile*
+
+# Test and coverage results
+htmlcov/
+.tox/
+.nox/
+coverage/
 .coverage
-htmlcov
-.venv
+*.cover
+*.coverage.*
+.cache
+
+# Compiled and packaged Python files
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# IDE and editor configurations
+.vscode/
+.idea/
+*.iml
+
+# Git files
+.git/
+.gitignore
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+Thumbs.db
+.DS_Store
