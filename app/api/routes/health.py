@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
+from app.api.response import Result
 
 router = APIRouter()
 
@@ -9,5 +10,5 @@ async def home() -> str:
 
 
 @router.get("/ping")
-async def ping() -> str:
-    return "pong"
+async def ping() -> Result:
+    return Result.ok("pong")

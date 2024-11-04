@@ -23,7 +23,7 @@ from app.models import (
     UserUpdate,
     UserUpdateMe,
 )
-from app.utils import  send_email
+from app.utils import send_email
 
 router = APIRouter()
 
@@ -74,7 +74,8 @@ def update_user_me(
     """
 
     if user_in.email:
-        existing_user = crud.get_user_by_email(session=session, email=user_in.email)
+        existing_user = crud.get_user_by_email(
+            session=session, email=user_in.email)
         if existing_user and existing_user.id != current_user.id:
             raise HTTPException(
                 status_code=409, detail="User with this email already exists"
@@ -85,6 +86,7 @@ def update_user_me(
     session.commit()
     session.refresh(current_user)
     return current_user
+
 
 @router.post("/signup", response_model=UserPublic)
 def register_user(session: SessionDep, user_in: UserRegister) -> Any:
@@ -142,13 +144,15 @@ def update_user(
             detail="The user with this id does not exist in the system",
         )
     if user_in.email:
-        existing_user = crud.get_user_by_email(session=session, email=user_in.email)
+        existing_user = crud.get_user_by_email(
+            session=session, email=user_in.email)
         if existing_user and existing_user.id != user_id:
             raise HTTPException(
                 status_code=409, detail="User with this email already exists"
             )
 
-    db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)
+    db_user = crud.update_user(
+        session=session, db_user=db_user, user_in=user_in)
     return db_user
 
 

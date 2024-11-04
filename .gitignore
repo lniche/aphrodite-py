@@ -10,7 +10,7 @@ env/
 *.env
 
 # Log files
-*.log
+*.log*
 logs/
 log/
 
