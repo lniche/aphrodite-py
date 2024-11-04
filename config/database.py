@@ -4,10 +4,10 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     """pgsql db"""
     DB_HOST: str = '127.0.0.1'
-    DB_PORT: int = 3306
-    DB_DATABASE: str = 'fastapi'
-    DB_USER: str = 'root'
-    DB_PASSWORD: str = '123456'
+    DB_PORT: int = 5432
+    DB_DATABASE: str = 'test'
+    DB_USER: str = 'postgres'
+    DB_PASSWORD: str = '123123'
 
     class Config:
         env_file = ".env"

@@ -9,7 +9,13 @@ from app.providers import route_provider
 
 
 def create_app() -> FastAPI:
-    app = FastAPI()
+    app = FastAPI(
+        title="Aphrodite-py",
+        description="API Description",
+        version="1.0.0",
+        openapi_url="/api-docs/openapi.json",
+        docs_url="/swagger-ui/index.html",
+    )
 
     register(app, logging_provider)
     register(app, app_provider)

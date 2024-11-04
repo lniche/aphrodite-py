@@ -23,12 +23,12 @@ def get_auth_user(
     except (jwt.JWTError, jwt.JWTClaimsError):
         raise AuthenticationError(message="Could not validate credentials")
 
-    user_id = payload.get('sub')
-    user = User.get_or_none(User.id == user_id)
+    user_code = payload.get('sub')
+    user = User.get_or_none(User.user_code == user_code)
 
     if not user:
         raise AuthenticationError(message="User not found")
-    if not user.is_enabled():
+    if not user.is_active():
         raise AuthenticationError(message='Inactive user')
     return user
 

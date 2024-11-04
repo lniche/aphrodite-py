@@ -53,7 +53,7 @@ class CellphoneGrant:
         user = User.get_or_none(User.cellphone == cellphone)
         # 验证通过，用户不存在则创建
         if not user:
-            username = 'srcp_' + alphanumeric_random()
+            username = 'SUGAR_' + alphanumeric_random()
             password = hashing.get_password_hash(alphanumeric_random())
             user = User.create(cellphone=cellphone, username=username, password=password)
 

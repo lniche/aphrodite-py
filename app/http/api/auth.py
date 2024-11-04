@@ -3,44 +3,36 @@ from starlette.responses import JSONResponse
 
 from app.http.deps import get_db
 from app.schemas.auth import Token
+from app.schemas.response import Result
 from app.services.auth import random_code_verifier
 from app.services.auth.grant import PasswordGrant, CellphoneGrant
 from app.services.auth.oauth2_schema import OAuth2PasswordRequest, OAuth2CellphoneRequest
-from app.services.sms import sms_sender
 from app.support.helper import is_chinese_cellphone
+from app.models.user import User
+from app.http import deps
 
 router = APIRouter(
-    prefix="/auth"
+    prefix="/v1"
 )
 
 
-@router.post("/token", response_model=Token, dependencies=[Depends(get_db)])
-def token(request_data: OAuth2PasswordRequest):
-    """
-    用户名+密码登录
-    """
-    grant = PasswordGrant(request_data)
-    return grant.respond()
-
-
-@router.post("/cellphone/token", response_model=Token, dependencies=[Depends(get_db)])
-def cellphone_token(request_data: OAuth2CellphoneRequest):
-    """
-    手机号+验证码登录
-    """
+@router.post("/login", response_model=Token, dependencies=[Depends(get_db)])
+def login(request_data: OAuth2CellphoneRequest):
     grant = CellphoneGrant(request_data)
     return grant.respond()
 
 
-@router.post("/cellphone/verification_code")
-def send_verification_code(cellphone: str = Body(..., embed=True)):
-    """
-    发送验证码
-    """
-    if not is_chinese_cellphone(cellphone):
-        return JSONResponse(status_code=422, content={"message": 'invalid cellphone'})
+@router.post("/send-code")
+def send_verification_code(phone: str = Body(..., embed=True)):
+    if not is_chinese_cellphone(phone):
+        return JSONResponse(status_code=422, content={"message": 'invalid phone'})
 
-    code = random_code_verifier.make(cellphone)
-    # fake send
-    sms_sender.send(cellphone, {'code': code})
+    code = random_code_verifier.make(phone)
+    # TODO fake send
     return {"success": True}
+
+
+@router.post("/logout", dependencies=[Depends(get_db)])
+def login(auth_user: User = Depends(deps.get_auth_user)):
+
+    return Result.ok("")
