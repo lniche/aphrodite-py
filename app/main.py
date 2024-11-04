@@ -8,12 +8,12 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 logging.basicConfig(
-    level=logging.INFO,  # 设置日志级别
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",  # 日志格式
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[
         RotatingFileHandler("storage/logs/server.log", maxBytes=1024 * \
-                            1024, backupCount=3),  # 每个文件最大 1MB，最多保留 3 个文件
-        logging.StreamHandler()  # 输出到控制台
+                            1024, backupCount=3),
+        logging.StreamHandler()
     ]
 )
 
@@ -24,7 +24,7 @@ def custom_generate_unique_id(route: APIRoute) -> str:
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_STR}/openapi.json",
+    openapi_url="/api-docs/openapi.json",
     generate_unique_id_function=custom_generate_unique_id,
 )
 
