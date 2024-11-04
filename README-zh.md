@@ -1,6 +1,6 @@
 # Aphrodite Python API 快速开发脚手架
 
-> Aphrodite 是一个基于 [full-stack-fastapi-template](https://github.com/fastapi/full-stack-fastapi-template) 开发的模板项目，旨在帮助开发者快速上手，深入理解框架的使用流程。该项目提供了全面的示例代码和配置，涵盖了常见的开发场景，以便于学习和实践。此外，Aphrodite 还包含容器部署模板，使得项目在现代云环境中能够轻松部署与管理，助力开发者高效构建和发布应用。
+> Aphrodite 是一个基于 [fastapi-skeleton](https://github.com/kaxiluo/fastapi-skeleton) 开发的模板项目，旨在帮助开发者快速上手，深入理解框架的使用流程。该项目提供了全面的示例代码和配置，涵盖了常见的开发场景，以便于学习和实践。此外，Aphrodite 还包含容器部署模板，使得项目在现代云环境中能够轻松部署与管理，助力开发者高效构建和发布应用。
 
 | 技术                                                      | 说明                                           |
 | --------------------------------------------------------- | ---------------------------------------------- |
@@ -43,16 +43,13 @@ cd config
 mv .env.example .env
 
 # 3. 添加依赖
-pip install uv
-uv sync
-source .venv/bin/activate
+pip install -r requirements.txt
 
 # 4. 初始化数据库
 deploy/db.sql
-alembic upgrade head
 
 # 5. 启动服务
-fastapi run --reload app/main.py
+uvicorn main:app
 ```
 
 ## 包管理

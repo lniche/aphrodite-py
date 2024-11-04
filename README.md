@@ -1,172 +1,147 @@
-# FastAPI Project - Backend
+这是一个开箱即用的FastAPI脚手架，集成了ORM模型、JWT认证、日志系统、异常处理、路由注册、系统配置、调度任务等常用的模块。
 
-## Requirements
+## 设计思想
 
-* [Docker](https://www.docker.com/).
-* [uv](https://docs.astral.sh/uv/) for Python package and environment management.
+- 层级结构清晰
+- 简洁优雅
+- 易于扩展
+- 开箱即用
 
-## Docker Compose
+## 项目结构
 
-Start the local development environment with Docker Compose following the guide in [../development.md](../development.md).
-
-## General Workflow
-
-By default, the dependencies are managed with [uv](https://docs.astral.sh/uv/), go there and install it.
-
-From `./backend/` you can install all the dependencies with:
-
-```console
-$ uv sync
+```
+/kaxiluo/fastapi-skeleton/
+|-- app
+|   |-- commands                                ----- 放置一些命令行
+|   |   `-- __init__.py
+|   |-- exceptions                              ----- 自定义的异常类
+|   |   |-- __init__.py
+|   |   `-- exception.py
+|   |-- http                                    ----- http目录
+|   |   |-- api                                 ----- api控制器目录
+|   |   |   |-- __init__.py
+|   |   |   |-- auth.py                         ----- 登录认证api的控制器
+|   |   |   |-- demo.py
+|   |   |   `-- users.py
+|   |   |-- middleware                          ----- 放置自定义中间件
+|   |   |   `-- __init__.py
+|   |   |-- __init__.py
+|   |   `-- deps.py                             ----- 依赖
+|   |-- jobs                                    ----- 调度任务
+|   |   |-- __init__.py
+|   |   `-- demo_job.py
+|   |-- models                                  ----- 模型目录
+|   |   |-- __init__.py
+|   |   |-- base_model.py                       ----- 定义模型的基类
+|   |   `-- user.py
+|   |-- providers                               ----- 核心服务提供者
+|   |   |-- __init__.py
+|   |   |-- app_provider.py                     ----- 注册应用的全局事件、中间件等
+|   |   |-- database.py                         ----- 数据库连接
+|   |   |-- handle_exception.py                 ----- 异常处理器
+|   |   |-- logging_provider.py                 ----- 集成loguru日志系统
+|   |   `-- route_provider.py                   ----- 注册路由文件routes/*
+|   |-- schemas                                 ----- 数据模型，负责请求和响应资源数据的定义和格式转换
+|   |   |-- __init__.py
+|   |   `-- user.py
+|   |-- services                                ----- 服务层，业务逻辑层
+|   |   |-- auth                                ----- 认证相关服务
+|   |   |   |-- __init__.py
+|   |   |   |-- grant.py                        ----- 认证核心类
+|   |   |   |-- hashing.py
+|   |   |   |-- jwt_helper.py
+|   |   |   |-- oauth2_schema.py
+|   |   |   `-- random_code_verifier.py
+|   |   `-- __init__.py
+|   |-- support                                 ----- 公共方法
+|   |   |-- __init__.py
+|   |   `-- helper.py
+|   `-- __init__.py
+|-- bootstrap                                   ----- 启动项
+|   |-- __init__.py
+|   |-- application.py                          ----- 创建app实例
+|   `-- scheduler.py                            ----- 创建调度器实例
+|-- config                                      ----- 配置目录
+|   |-- auth.py                                 ----- 认证-JWT配置
+|   |-- config.py                               ----- app配置
+|   |-- database.py                             ----- 数据库配置
+|   `-- logging.py                              ----- 日志配置
+|-- database
+|   `-- migrations                              ----- 初始化SQL
+|       `-- 2022_09_07_create_users_table.sql
+|-- routes                                      ----- 路由目录
+|   |-- __init__.py
+|   `-- api.py                                  ----- api路由
+|-- storage
+|   `-- logs                                    ----- 日志目录
+|-- README.md
+|-- main.py                                     ----- app/api启动入口
+|-- requirements.txt
+`-- scheduler.py                                ----- 调度任务启动入口
 ```
 
-Then you can activate the virtual environment with:
+## 集成的模块
 
-```console
-$ source .venv/bin/activate
-```
+- 日志系统
 
-Make sure your editor is using the correct Python virtual environment, with the interpreter at `backend/.venv/bin/python`.
+集成 `loguru`，一个优雅、简洁的日志库
 
-Modify or add SQLModel models for data and SQL tables in `./backend/app/models.py`, API endpoints in `./backend/app/api/`, CRUD (Create, Read, Update, Delete) utils in `./backend/app/crud.py`.
+- 异常处理
 
-## VS Code
+定义认证异常类，注册 `Exception Handler`
 
-There are already configurations in place to run the backend through the VS Code debugger, so that you can use breakpoints, pause and explore variables, etc.
+- 路由注册
 
-The setup is also already configured so you can run the tests through the VS Code Python tests tab.
+路由集中注册，按模块划分为不同的文件，代码层次结构清晰
 
-## Docker Compose Override
+- 系统配置
 
-During development, you can change Docker Compose settings that will only affect the local development environment in the file `docker-compose.override.yml`.
+基于 `pydantic.BaseSettings`，使用 `.env` 文件设置环境变量。配置文件按功能模块划分，默认定义了app基础配置、数据库配置(mysql+redis)、日志配置、认证配置
 
-The changes to that file only affect the local development environment, not the production environment. So, you can add "temporary" changes that help the development workflow.
+- 数据库 ORM模型
 
-For example, the directory with the backend code is synchronized in the Docker container, copying the code you change live to the directory inside the container. That allows you to test your changes right away, without having to build the Docker image again. It should only be done during development, for production, you should build the Docker image with a recent version of the backend code. But during development, it allows you to iterate very fast.
+基于 `peewee`，一个轻量级的Python ORM框架
 
-There is also a command override that runs `fastapi run --reload` instead of the default `fastapi run`. It starts a single server process (instead of multiple, as would be for production) and reloads the process whenever the code changes. Have in mind that if you have a syntax error and save the Python file, it will break and exit, and the container will stop. After that, you can restart the container by fixing the error and running again:
+- 中间件
 
-```console
-$ docker compose watch
-```
+默认注册了全局CORS中间件
 
-There is also a commented out `command` override, you can uncomment it and comment the default one. It makes the backend container run a process that does "nothing", but keeps the container alive. That allows you to get inside your running container and execute commands inside, for example a Python interpreter to test installed dependencies, or start the development server that reloads when it detects changes.
+- JWT认证
 
-To get inside the container with a `bash` session you can start the stack with:
+默认提供了账号密码和手机号验证码两种认证方式。框架易于扩展新的认证方式。
 
-```console
-$ docker compose watch
-```
+测试登录认证请先执行初始化的SQL：`fastapi-skeleton/database/migrations/*.sql`
 
-and then in another terminal, `exec` inside the running container:
+注：验证码的存储依赖redis
 
-```console
-$ docker compose exec backend bash
-```
+- 调度任务
 
-You should see an output like:
+基于 `APScheduler` 调度任务框架
 
-```console
-root@7f2607af31c3:/app#
-```
+注：定时任务与api是分开启动的
 
-that means that you are in a `bash` session inside your container, as a `root` user, under the `/app` directory, this directory has another directory called "app" inside, that's where your code lives inside the container: `/app/app`.
+## 运行
 
-There you can use the `fastapi run --reload` command to run the debug live reloading server.
+1. 执行初始化SQL：`/database/migrations/2022_09_07_create_users_table.sql`
 
-```console
-$ fastapi run --reload app/main.py
-```
-
-...it will look like:
-
-```console
-root@7f2607af31c3:/app# fastapi run --reload app/main.py
-```
-
-and then hit enter. That runs the live reloading server that auto reloads when it detects code changes.
-
-Nevertheless, if it doesn't detect a change but a syntax error, it will just stop with an error. But as the container is still alive and you are in a Bash session, you can quickly restart it after fixing the error, running the same command ("up arrow" and "Enter").
-
-...this previous detail is what makes it useful to have the container alive doing nothing and then, in a Bash session, make it run the live reload server.
-
-## Backend tests
-
-To test the backend run:
-
-```console
-$ bash ./scripts/test.sh
-```
-
-The tests run with Pytest, modify and add tests to `./backend/app/tests/`.
-
-If you use GitHub Actions the tests will run automatically.
-
-### Test running stack
-
-If your stack is already up and you just want to run the tests, you can use:
+2. API
 
 ```bash
-docker compose exec backend bash scripts/tests-start.sh
+uvicorn main:app --host 0.0.0.0 --port 8080
 ```
 
-That `/app/scripts/tests-start.sh` script just calls `pytest` after making sure that the rest of the stack is running. If you need to pass extra arguments to `pytest`, you can pass them to that command and they will be forwarded.
-
-For example, to stop on first error:
+3. 调度器
 
 ```bash
-docker compose exec backend bash scripts/tests-start.sh -x
+python scheduler.py 
 ```
 
-### Test Coverage
+关于部署部分，参见我的另一篇文章 [fastapi部署](https://www.kxler.com/2022/10/21/fastapi-deployment-venv-gunicorn-service/)
 
-When the tests are run, a file `htmlcov/index.html` is generated, you can open it in your browser to see the coverage of the tests.
+## 参考
 
-## Migrations
+[FastAPI官方中文文档](https://fastapi.tiangolo.com/zh/)
 
-As during local development your app directory is mounted as a volume inside the container, you can also run the migrations with `alembic` commands inside the container and the migration code will be in your app directory (instead of being only inside the container). So you can add it to your git repository.
+FastAPI作者的全栈项目脚手架 [full-stack-fastapi-postgresql](https://github.com/tiangolo/full-stack-fastapi-postgresql)
 
-Make sure you create a "revision" of your models and that you "upgrade" your database with that revision every time you change them. As this is what will update the tables in your database. Otherwise, your application will have errors.
-
-* Start an interactive session in the backend container:
-
-```console
-$ docker compose exec backend bash
-```
-
-* Alembic is already configured to import your SQLModel models from `./backend/app/models.py`.
-
-* After changing a model (for example, adding a column), inside the container, create a revision, e.g.:
-
-```console
-$ alembic revision --autogenerate -m "Add column last_name to User model"
-```
-
-* Commit to the git repository the files generated in the alembic directory.
-
-* After creating the revision, run the migration in the database (this is what will actually change the database):
-
-```console
-$ alembic upgrade head
-```
-
-If you don't want to use migrations at all, uncomment the lines in the file at `./backend/app/core/db.py` that end in:
-
-```python
-SQLModel.metadata.create_all(engine)
-```
-
-and comment the line in the file `scripts/prestart.sh` that contains:
-
-```console
-$ alembic upgrade head
-```
-
-If you don't want to start with the default models and want to remove them / modify them, from the beginning, without having any previous revision, you can remove the revision files (`.py` Python files) under `./backend/app/alembic/versions/`. And then create a first migration as described above.
-
-## Email Templates
-
-The email templates are in `./backend/app/email-templates/`. Here, there are two directories: `build` and `src`. The `src` directory contains the source files that are used to build the final email templates. The `build` directory contains the final email templates that are used by the application.
-
-Before continuing, ensure you have the [MJML extension](https://marketplace.visualstudio.com/items?itemName=attilabuti.vscode-mjml) installed in your VS Code.
-
-Once you have the MJML extension installed, you can create a new email template in the `src` directory. After creating the new email template and with the `.mjml` file open in your editor, open the command palette with `Ctrl+Shift+P` and search for `MJML: Export to HTML`. This will convert the `.mjml` file to a `.html` file and now you can save it in the build directory.
+代码结构组织风格参考 [Laravel框架](https://github.com/laravel/laravel)
