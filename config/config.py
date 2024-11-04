@@ -4,20 +4,20 @@ from pydantic import BaseSettings, Field
 
 
 class Settings(BaseSettings):
-    NAME: str = "fastapi"
+    NAME: str = "aphrodite-py"
     DEBUG: bool = False
-    ENV: str = "production"
+    ENV: str = "dev"
 
-    BASE_PATH: str = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))
+    BASE_PATH: str = os.path.dirname(
+        os.path.dirname((os.path.abspath(__file__))))
 
     SERVER_HOST: str = "0.0.0.0"
     SERVER_PORT: int = 8000
 
-    URL: str = "http://localhost"
-    TIME_ZONE: str = "RPC"
+    URL: str = "http://127.0.0.1"
+    TIME_ZONE: str = "UTC"
 
     class Config:
-        env_prefix = 'APP_'
         env_file = ".env"
         env_file_encoding = 'utf-8'
 

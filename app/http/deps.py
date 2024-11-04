@@ -28,7 +28,7 @@ def get_auth_user(
 
     if not user:
         raise AuthenticationError(message="User not found")
-    if not user.is_active():
+    if not user.is_enabled():
         raise AuthenticationError(message='Inactive user')
     return user
 

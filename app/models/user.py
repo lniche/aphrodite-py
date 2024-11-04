@@ -22,5 +22,5 @@ class User(BaseModel):
     avatar = CharField()
     status = IntegerField() # 0: Unactivated, 1: Active, 2: Frozen, 3: Deleted
 
-    def is_active(self):
+    def is_enabled(self):
         return self.status == 1

@@ -2,10 +2,13 @@ import logging
 
 from fastapi import FastAPI
 
+from app.http.middleware.logging import LoggingMiddleware
+from app.http.middleware.trace import TraceMiddleware
 from app.providers import app_provider
 from app.providers import logging_provider
 from app.providers import handle_exception
 from app.providers import route_provider
+from fastapi.middleware.cors import CORSMiddleware
 
 
 def create_app() -> FastAPI:
@@ -15,6 +18,12 @@ def create_app() -> FastAPI:
         version="1.0.0",
         openapi_url="/api-docs/openapi.json",
         docs_url="/swagger-ui/index.html",
+        servers=[
+              {"url": "http://127.0.0.1:8000",
+                  "description": "Development Environmen"},
+              {"url": "http://test.aphrodite.com",
+                  "description": "Test Environment"},
+        ]
     )
 
     register(app, logging_provider)
@@ -23,6 +32,15 @@ def create_app() -> FastAPI:
 
     boot(app, route_provider)
 
+    app.add_middleware(TraceMiddleware)
+    app.add_middleware(LoggingMiddleware)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     return app
 
 

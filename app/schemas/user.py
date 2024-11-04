@@ -1,30 +1,17 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, validator
-
-from app.support.helper import format_datetime
+from pydantic import BaseModel, Field
 
 
-# Shared properties
-class UserBase(BaseModel):
-    id: int
-    username: str
-    nickname: str
-    gender: str
-    avatar: str
-
-    class Config:
-        orm_mode = True
+class UpdateUser(BaseModel):
+    nickname: Optional[str] = Field(..., example="john")
+    email: Optional[str] = Field(..., example="john@example.com")
 
 
-class UserDetail(UserBase):
-    cellphone: Optional[str] = None
-    email: Optional[str] = None
-    email_verified_at: Optional[datetime] = None
-    state: str
-    created_at: datetime
-
-    # validators
-    _format_datetime_email_verified_at = validator('email_verified_at', allow_reuse=True)(format_datetime)
-    _format_datetime_created_at = validator('created_at', allow_reuse=True)(format_datetime)
+class GetUserResp(BaseModel):
+    user_code: Optional[str] = Field(..., example="A8000")
+    user_no: Optional[str] = Field(..., example="100000")
+    phone: Optional[str] = Field(..., example="13800138000")
+    nickname: Optional[str] = Field(..., example="john")
+    email: Optional[str] = Field(..., example="john@example.com")
