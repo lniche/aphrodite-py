@@ -10,13 +10,15 @@ from app.services.auth import random_code_verifier
 from app.support.helper import is_chinese_cellphone
 from app.models.user import User
 from app.http import deps
+from app.providers.database import redis_client
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from app.exceptions.exception import AuthenticationError
 from app.models.user import User
 from app.services.auth import jwt_helper, hashing, random_code_verifier
 from app.support.helper import alphanumeric_random
+from app.support.snowflake import SnowflakeIdGenerator
 from config.auth import settings
 import logging
 
@@ -32,18 +34,23 @@ def login(request: Request, req: LoginReq):
     if not random_code_verifier.check(phone, code):
         raise AuthenticationError(message='Incorrect verification code')
     client_ip = request.client.host
-    token = create_token_response_from_user(user)
     user = User.get_or_none(User.phone == phone)
     if not user:
-        nickname = 'SUGAR_' + user.phone[-4:]
+        generator = SnowflakeIdGenerator(machine_id=1)
+        user_code = generator.generate_id()
+        token = create_token_response_from_user(user_code)
+        nickname = 'SUGAR_' + phone[-4:]
         user = User.create(
             nickname=nickname,
             login_at=datetime.now(),
             login_token=token,
             client_ip=client_ip,
-            phone=phone
+            phone=phone,
+            user_code=user_code,
+            user_no=generate_uno(),
         )
     else:
+        token = create_token_response_from_user(user.user_code)
         user.login_at = datetime.now()
         user.login_token = token
         user.client_ip = client_ip
@@ -58,8 +65,8 @@ def login(request: Request, req: LoginReq):
 @router.post("/send-code")
 def send_verification_code(req: SendVerifyCodeReq):
     phone = req.phone
-    if not is_chinese_cellphone(phone):
-        return Result.err("invalid phone")
+    # if not is_chinese_cellphone(phone):
+    #     return Result.err("invalid phone")
     code = random_code_verifier.make(phone)
     logging.info(f"Send verification code: {code} to phone: {phone}")
     # TODO fake send
@@ -73,9 +80,18 @@ def logout(auth_user: User = Depends(deps.get_auth_user)):
     return Result.ok()
 
 
-def create_token_response_from_user(user):
+def create_token_response_from_user(user_code):
     expires_delta = timedelta(minutes=settings.JWT_TTL)
     expires_in = int(expires_delta.total_seconds())
-    token = jwt_helper.create_access_token(user.id, expires_delta)
+    token = jwt_helper.create_access_token(user_code, expires_delta)
 
     return token
+
+
+def generate_uno():
+    key = "next:uno"
+    if not redis_client.exists(key):
+        redis_client.set(key, 100000)
+        return 100000
+    else:
+        return redis_client.incr(key)

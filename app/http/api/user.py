@@ -1,9 +1,10 @@
+from typing import Optional
 from fastapi import APIRouter, Depends
 
 from app.http import deps
 from app.http.deps import get_db
 from app.models.user import User
-from app.schemas.response import Result
+from app.schemas.response import Result, StatusCode
 from app.schemas.user import UpdateUser, GetUserResp
 
 router = APIRouter(
@@ -11,10 +12,16 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=GetUserResp, dependencies=[Depends(get_db)])
-def get_user(auth_user: User = Depends(deps.get_auth_user)):
+@router.get("/{user_code}", response_model=GetUserResp, dependencies=[Depends(get_db)])
+def get_user(user_code: Optional[str] = None, auth_user: User = Depends(deps.get_auth_user)):
+    if user_code:
+        user_info = User.get_or_none(User.user_code == user_code)
+        if not user_info:
+            raise Result.err(StatusCode.ERR_DATA)
+    else:
+        user_info = auth_user
     response_data = GetUserResp(
-        user_code=auth_user.user_code,
+        user_code=user_info.user_code,
         user_no=auth_user.user_no,
         email=auth_user.email,
         nickname=auth_user.nickname,

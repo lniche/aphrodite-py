@@ -9,10 +9,21 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         if "/api-docs" in request.url.path or "/swagger-ui" in request.url.path or "/docs" in request.url.path or "/redoc" in request.url.path:
             return await call_next(request)
 
+        content_type = request.headers.get('Content-Type', '')
+        if 'application/json' not in content_type:
+            return await call_next(request)
+
         request_body = await request.body()
         logging.info(f"Request path: {request.url.path}, method: {
                      request.method}, body: {request_body.decode()}")
 
+        async def receive():
+            return {
+                "type": "http.request",
+                "body": request_body,
+                "more_body": False
+            }
+        request._receive = receive
         response = await call_next(request)
 
         response_body = b""

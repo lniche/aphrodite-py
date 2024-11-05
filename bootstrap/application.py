@@ -13,14 +13,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="Aphrodite-py",
+        title="Aphrodite API",
         description="API Description",
         version="1.0.0",
         openapi_url="/api-docs/openapi.json",
         docs_url="/swagger-ui/index.html",
         servers=[
               {"url": "http://127.0.0.1:8000",
-                  "description": "Development Environmen"},
+                  "description": "Development Environment"},
               {"url": "http://test.aphrodite.com",
                   "description": "Test Environment"},
         ]

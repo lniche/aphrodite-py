@@ -3,20 +3,6 @@ from typing import Any, Dict, Optional
 from pydantic import BaseModel
 
 
-class Result(BaseModel):
-    code: int
-    message: str
-    data: Optional[Any] = None
-
-    @classmethod
-    def ok(cls, data: Optional[Any] = None, message: str = "ok") -> "Result":
-        return cls(code=StatusCode.OK, message=message, data=data)
-
-    @classmethod
-    def err(cls, message: str = "err") -> "Result":
-        return cls(code=StatusCode.ERR_INTERNAL_SERVER_ERROR, message=message, data=None)
-
-
 class StatusCode:
     # common errors
     OK = 0
@@ -44,3 +30,20 @@ class StatusCode:
             StatusCode.ERR_SERVICE: "Service Error",
         }
         return messages.get(code, "Unknown Error")
+
+
+class Result(BaseModel):
+    code: int
+    message: str
+    data: Optional[Any] = None
+
+    @classmethod
+    def ok(cls, data: Optional[Any] = None, message: str = "ok") -> "Result":
+        return cls(code=StatusCode.OK, message=message, data=data)
+
+    @classmethod
+    def err(cls, status_code: Optional[Any] = None, message: str = "err") -> "Result":
+        if status_code is None:
+            status_code = StatusCode.ERR_INTERNAL_SERVER_ERROR
+            message = StatusCode.get_error_message(status_code)
+        return cls(code=status_code, message=message, data=None)

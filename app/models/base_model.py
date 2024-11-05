@@ -10,8 +10,8 @@ class BaseModel(Model):
     id = AutoField()
     created_at = DateTimeField(default=datetime.datetime.now())
     updated_at = DateTimeField()
-    Deleted_at = DateTimeField()
-    created_by = CharField()
+    deleted_at = DateTimeField()
+    created_by = CharField("777")
     updated_by = CharField()
     version = IntegerField(default=1)
 
