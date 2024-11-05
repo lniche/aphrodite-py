@@ -1,6 +1,7 @@
 from tkinter import E
 from typing import Any, Dict, Optional
 from pydantic import BaseModel
+import json
 
 
 class StatusCode:
@@ -35,7 +36,7 @@ class StatusCode:
 class Result(BaseModel):
     code: int
     message: str
-    data: Optional[Any] = None
+    data: Any
 
     @classmethod
     def ok(cls, data: Optional[Any] = None, message: str = "ok") -> "Result":

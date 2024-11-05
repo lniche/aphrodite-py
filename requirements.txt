@@ -1,5 +1,5 @@
 APScheduler~=3.10.1
-fastapi~=0.100.0
+fastapi~=0.100.0 
 jose~=1.0.0
 loguru~=0.7.0
 peewee~=3.16.0
@@ -7,6 +7,6 @@ starlette~=0.27.0
 uvicorn~=0.23.0
 psycopg2
 passlib[bcrypt]
-pydantic[dotenv]
+pydantic[dotenv]>=2.7.0
 python-jose[cryptography]
 redis~=5.0.1

@@ -32,8 +32,8 @@ def create_app() -> FastAPI:
 
     boot(app, route_provider)
 
-    app.add_middleware(TraceMiddleware)
     app.add_middleware(LoggingMiddleware)
+    app.add_middleware(TraceMiddleware)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

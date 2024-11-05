@@ -27,7 +27,7 @@ router = APIRouter(
 )
 
 
-@router.post("/login", response_model=LoginResp, dependencies=[Depends(get_db)])
+@router.post("/login", dependencies=[Depends(get_db)])
 def login(request: Request, req: LoginReq):
     phone = req.phone
     code = req.code
@@ -56,9 +56,7 @@ def login(request: Request, req: LoginReq):
         user.client_ip = client_ip
         user.save()
 
-    response_data = LoginResp(
-        access_token=token
-    )
+    response_data = LoginResp(access_token=user.login_token)
     return Result.ok(response_data)
 
 

@@ -11,7 +11,6 @@ class TraceMiddleware(BaseHTTPMiddleware):
             request_id = str(uuid.uuid4())
 
         request.state.request_id = request_id
-
         response = await call_next(request)
 
         response.headers["x-request-id"] = request_id

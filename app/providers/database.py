@@ -6,7 +6,8 @@ from playhouse.pool import PooledMySQLDatabase
 
 from config.database import settings, redis_settings
 
-db_state_default = {"closed": None, "conn": None, "ctx": None, "transactions": None}
+db_state_default = {"closed": None, "conn": None,
+                    "ctx": None, "transactions": None}
 db_state = ContextVar("db_state", default=db_state_default.copy())
 
 
@@ -49,7 +50,7 @@ redis_pool = redis.ConnectionPool(
     host=redis_settings.REDIS_HOST,
     port=redis_settings.REDIS_PORT,
     db=redis_settings.REDIS_DB,
-    password=redis_settings.REDIS_PASSWORD,
+    # password=redis_settings.REDIS_PASSWORD,
     decode_responses=True
 )
 redis_client = redis.Redis(connection_pool=redis_pool)

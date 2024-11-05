@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/{user_code}", response_model=GetUserResp, dependencies=[Depends(get_db)])
+@router.get("/{user_code}", dependencies=[Depends(get_db)])
 def get_user(user_code: Optional[str] = None, auth_user: User = Depends(deps.get_auth_user)):
     if user_code:
         user_info = User.get_or_none(User.user_code == user_code)

@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, Field
 
 
@@ -7,8 +8,8 @@ class LoginReq(BaseModel):
 
 
 class LoginResp(BaseModel):
-    access_token: str = Field(...,
-                              example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+    access_token: Optional[str] = Field(None,
+                                        example="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
 
 
 class SendVerifyCodeReq(BaseModel):
