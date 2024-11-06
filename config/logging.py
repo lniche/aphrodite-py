@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 from config.config import settings as app_settings
 
 """
-配置参考loguru
+Configuration reference loguru
 """
 
 
@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         env_file_encoding = 'utf-8'
+        extra = "allow"
 
 
 settings = Settings()

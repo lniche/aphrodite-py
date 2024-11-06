@@ -8,5 +8,6 @@ uvicorn~=0.23.0
 psycopg2
 passlib[bcrypt]
 pydantic[dotenv]>=2.7.0
+pydantic_settings
 python-jose[cryptography]
 redis~=5.0.1

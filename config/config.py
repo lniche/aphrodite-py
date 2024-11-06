@@ -18,8 +18,10 @@ class Settings(BaseSettings):
     TIME_ZONE: str = "UTC"
 
     class Config:
+        env_prefix = 'APP_'
         env_file = ".env"
         env_file_encoding = 'utf-8'
+        extra = "allow"
 
 
 settings = Settings()
