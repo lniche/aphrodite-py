@@ -1,4 +1,4 @@
-from routes.api import api_router
+from app.routes.api import api_router
 
 
 def boot(app):

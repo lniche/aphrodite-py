@@ -2,7 +2,7 @@ import logging
 import sys
 from loguru import logger
 
-from settings.logging import settings
+from app.settings.logging import settings
 
 
 def register(app=None):

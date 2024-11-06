@@ -1,6 +1,6 @@
 from app.schemas.response import Result
-from bootstrap.application import create_app
-from settings.config import settings
+from app.bootstrap.application import create_app
+from app.settings.config import settings
 import uvicorn
 
 app = create_app()

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from jose import jwt
 from typing import Any, Union
 
-from settings.auth import settings
+from app.settings.auth import settings
 
 
 def create_access_token(

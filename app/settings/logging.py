@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from settings.config import settings as app_settings
+from app.settings.config import settings as app_settings
 
 """
 Configuration reference loguru
@@ -9,7 +9,7 @@ Configuration reference loguru
 class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     LOG_PATH: str = app_settings.BASE_PATH + \
-        "/storage/logs/server-{time:YYYY-MM-DD}.log"
+        "/../storage/logs/server-{time:YYYY-MM-DD}.log"
     LOG_RETENTION: str = "14 days"
 
     class Config:

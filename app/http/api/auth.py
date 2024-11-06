@@ -1,13 +1,10 @@
 import datetime
-from typing import Optional
-from fastapi import APIRouter, Depends, Body, Request
-from starlette.responses import JSONResponse
+from fastapi import APIRouter, Depends, Request
 
 from app.http.deps import get_db
 from app.schemas.auth import LoginReq, LoginResp, SendVerifyCodeReq
 from app.schemas.response import Result
 from app.services.auth import random_code_verifier
-from app.support.helper import is_chinese_cellphone
 from app.models.user import User
 from app.http import deps
 from app.providers.database import redis_client
@@ -16,10 +13,9 @@ from datetime import datetime, timedelta
 
 from app.exceptions.exception import AuthenticationError
 from app.models.user import User
-from app.services.auth import jwt_helper, hashing, random_code_verifier
-from app.support.helper import alphanumeric_random
-from app.support.snowflake import SnowflakeIdGenerator
-from settings.auth import settings
+from app.services.auth import jwt_helper, random_code_verifier
+from pkg.util.snowflake import SnowflakeIdGenerator
+from app.settings.auth import settings
 import logging
 
 router = APIRouter(

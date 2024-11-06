@@ -1,6 +1,6 @@
 from app.providers.database import redis_client
-from app.support.helper import numeric_random
-from settings.config import settings
+from pkg.util.helper import numeric_random
+from app.settings.config import settings
 
 
 def make(phone, expired=60, length=4) -> str:
