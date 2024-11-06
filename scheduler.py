@@ -1,6 +1,6 @@
 import logging
 
-from bootstrap.scheduler import create_scheduler
+from app.bootstrap.scheduler import create_scheduler
 
 scheduler = create_scheduler()
 

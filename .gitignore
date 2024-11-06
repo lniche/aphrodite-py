@@ -13,6 +13,7 @@ env/
 *.log*
 logs/
 log/
+data/
 
 # Temporary files
 *.tmp
@@ -62,7 +63,3 @@ dmypy.json
 
 # Ignore database files
 *.sqlite3
-
-
-deploy/docker-compose/data
-deploy/docker-compose/logs

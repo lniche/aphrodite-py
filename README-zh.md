@@ -56,6 +56,7 @@ cd config
 mv .env.example .env
 
 # 3. 添加依赖
+# 确保你已经安装了 python 环境，推荐使用conda
 pip install -r requirements.txt
 
 # 4. 初始化数据库
