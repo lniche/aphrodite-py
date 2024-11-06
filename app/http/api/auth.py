@@ -19,7 +19,7 @@ from app.models.user import User
 from app.services.auth import jwt_helper, hashing, random_code_verifier
 from app.support.helper import alphanumeric_random
 from app.support.snowflake import SnowflakeIdGenerator
-from config.auth import settings
+from settings.auth import settings
 import logging
 
 router = APIRouter(

@@ -1,5 +1,5 @@
 from app.providers.database import db, redis_client
-from config.config import settings
+from settings.config import settings
 
 
 def register(app):

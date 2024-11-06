@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str = '123123'
 
     class Config:
-        env_file = ".env"
+        env_file = "config/.env"
         env_file_encoding = 'utf-8'
         extra = "allow"
 
@@ -24,7 +24,7 @@ class RedisSettings(BaseSettings):
     # REDIS_PASSWORD: str = None
 
     class Config:
-        env_file = ".env"
+        env_file = "config/.env"
         env_file_encoding = 'utf-8'
         extra = "allow"
 

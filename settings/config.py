@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_prefix = 'APP_'
-        env_file = ".env"
+        env_file = "config/.env"
         env_file_encoding = 'utf-8'
         extra = "allow"
 

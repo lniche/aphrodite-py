@@ -2,7 +2,7 @@ import logging
 import sys
 from loguru import logger
 
-from config.logging import settings
+from settings.logging import settings
 
 
 def register(app=None):
@@ -41,4 +41,5 @@ class InterceptHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
+        logger.opt(depth=depth, exception=record.exc_info).log(
+            level, record.getMessage())

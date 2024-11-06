@@ -4,7 +4,7 @@ import redis
 from peewee import _ConnectionState, PostgresqlDatabase
 from playhouse.pool import PooledMySQLDatabase
 
-from config.database import settings, redis_settings
+from settings.database import settings, redis_settings
 
 db_state_default = {"closed": None, "conn": None,
                     "ctx": None, "transactions": None}
