@@ -66,6 +66,10 @@ database/db.sql
 uvicorn main:app
 ```
 
+## Repo Activity
+
+![Alt](https://repobeats.axiom.co/api/embed/57c3b523ffb088038484a6b3883890a2615b3fa5.svg "Repobeats analytics image")
+
 ## 贡献
 
 如果你有任何建议或想法，欢迎创建 Issue 或直接提交 Pull Request。
