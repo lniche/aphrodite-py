@@ -1,5 +1,5 @@
 from app.schemas.response import Result
-from app.bootstrap.application import create_app
+from bootstrap.application import create_app
 from app.settings.config import settings
 import uvicorn
 

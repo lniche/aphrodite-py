@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from app.exceptions.exception import AuthenticationError
 from app.models.user import User
 from app.services.auth import jwt_helper, random_code_verifier
-from pkg.util.snowflake import SnowflakeIdGenerator
+from app.support.snowflake import SnowflakeIdGenerator
 from app.settings.auth import settings
 import logging
 

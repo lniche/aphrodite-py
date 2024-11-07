@@ -11,9 +11,6 @@ env/
 
 # Log files
 *.log*
-logs/
-log/
-data/
 
 # Temporary files
 *.tmp
