@@ -60,7 +60,7 @@ mv .env.example .env
 pip install -r requirements.txt
 
 # 4. 初始化数据库
-database/db.sql
+database/init.sql
 
 # 5. 启动服务
 uvicorn main:app

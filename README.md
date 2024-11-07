@@ -65,7 +65,7 @@ mv .env.example .env
 pip install -r requirements.txt
 
 # 4. Initialize the database
-database/db.sql
+database/init.sql
 
 # 5. Start the service
 uvicorn main:app
