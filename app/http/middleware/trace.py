@@ -5,14 +5,14 @@ import uuid
 
 class TraceMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        request_id = request.headers.get("x-request-id")
+        trace_id = request.headers.get("X-Request-ID")
 
-        if not request_id:
-            request_id = str(uuid.uuid4())
+        if not trace_id:
+            trace_id = str(uuid.uuid4())
 
-        request.state.request_id = request_id
+        request.state.trace_id = trace_id
         response = await call_next(request)
 
-        response.headers["x-request-id"] = request_id
+        response.headers["X-Request-ID"] = trace_id
 
         return response

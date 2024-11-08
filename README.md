@@ -33,7 +33,7 @@ Aphrodite is a template project based on [Fastapi-skeleton](https://github.com/k
 
 - **Swagger document integration**: Automatically generates API documents for front-end development and testing.
 
-## Directory structure
+## Structure
 
 ```
 .
@@ -49,7 +49,7 @@ Aphrodite is a template project based on [Fastapi-skeleton](https://github.com/k
 └── README.md # Project description
 ```
 
-## Local operation
+## Run Local
 
 ```bash
 # 1. Clone the project code base

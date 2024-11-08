@@ -13,14 +13,14 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         if 'application/json' not in content_type:
             return await call_next(request)
 
-        request_id = getattr(request.state, 'request_id', None)
-        if request_id is None:
+        trace_id = getattr(request.state, 'trace_id', None)
+        if trace_id is None:
             logging.warning(
                 "Request ID is not available in LoggingMiddleware.")
 
         request_body = await request.body()
         logging.info(f"Request path: {request.url.path}, method: {
-                     request.method}, body: {request_body.decode()},request_id: {request_id}")
+                     request.method}, body: {request_body.decode()},trace_id: {trace_id}")
 
         async def receive():
             return {
@@ -36,6 +36,6 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             response_body += chunk
 
         logging.info(f"Response status: {response.status_code}, body: {
-                     response_body.decode()},request_id: {request_id}")
+                     response_body.decode()},trace_id: {trace_id}")
 
         return Response(content=response_body, status_code=response.status_code, headers=dict(response.headers))

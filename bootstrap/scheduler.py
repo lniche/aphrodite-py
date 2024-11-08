@@ -19,7 +19,4 @@ def create_scheduler() -> BlockingScheduler:
 
 
 def register_job(scheduler):
-    """
-     注册调度任务
-    """
     scheduler.add_job(demo_job, 'interval', seconds=5)
