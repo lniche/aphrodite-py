@@ -37,16 +37,16 @@ Aphrodite is a template project based on [Fastapi-skeleton](https://github.com/k
 
 ```
 .
-├── app/ # Application core code
-├── bin/ # Executable script
-├── bootsrap/ # Bootstrap file
-├── database/ # Database related
-├── deploy/ # Deployment related files
-├── docs/ # Project documentation
-├── routes/ # Routing files
-├── storage/ # File storage
-├── tests/ # Test files
-└── README.md # Project description
+├── app/        # Application core code
+├── bin/        # Executable scripts
+├── bootstrap/  # Bootstrap files
+├── database/   # Database files
+├── deploy/     # Deployment files
+├── docs/       # Documentation
+├── routes/     # Routing files
+├── storage/    # File storage
+├── tests/      # Tests
+└── README.md   # Project description
 ```
 
 ## Run Local
