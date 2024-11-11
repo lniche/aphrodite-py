@@ -39,16 +39,16 @@ Aphrodite is a template project based on [Fastapi-skeleton](https://github.com/k
 
 ```
 .
-├── app/ # Application core code
-├── bin/ # Executable script
-├── bootsrap/ # Bootstrap file
-├── database/ # Database related
-├── deploy/ # Deployment related files
-├── docs/ # Project documentation
-├── routes/ # Routing files
-├── storage/ # File storage
-├── tests/ # Test files
-└── README.md # Project description
+├── app/        # Application core code
+├── bin/        # Executable scripts
+├── bootstrap/  # Bootstrap files
+├── database/   # Database files
+├── deploy/     # Deployment files
+├── docs/       # Documentation
+├── routes/     # Routing files
+├── storage/    # File storage
+├── tests/      # Tests
+└── README.md   # Project description
 ```
 
 ## Run Local
@@ -81,11 +81,20 @@ uvicorn main:app
 
 If you have any suggestions or ideas, please create an Issue or submit a Pull Request directly.
 
-1. Fork this repository.
-2. Create a new branch: git checkout -b feature/your-feature
-3. Commit your changes: git commit -m 'Add new feature'
-4. Push to your branch: git push origin feature/your-feature
-5. Submit a Pull Request.
+1. **Fork** this repository.
+2. **Create** a new branch: 
+```
+git checkout -b feature/your-feature
+```
+3. **Commit** your changes: 
+```
+git commit -m 'Add new feature'
+```
+4. **Push** to your branch: 
+```
+git push origin feature/your-feature
+```
+5. **Submit** a Pull Request.
 
 ## License
 
