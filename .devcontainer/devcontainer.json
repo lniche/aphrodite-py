@@ -1,22 +1,24 @@
 {
-    "name": "Maybe",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
-    "workspaceFolder": "/workspace",
-    "containerEnv": {
-      "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
-      "GITHUB_USER": "${localEnv:GITHUB_USER}"
-    },
-    "remoteEnv": {
-      "PATH": "/workspace/bin:${containerEnv:PATH}"
-    },
-    "postCreateCommand": "bundle install && npm install",
-    "customizations": {
-      "vscode": {
-        "extensions": [
-          "biomejs.biome",
-          "EditorConfig.EditorConfig"
-        ]
-      }
+  "name": "FastAPI Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "containerEnv": {
+    "PYTHONUNBUFFERED": "1",
+    "POETRY_VIRTUALENVS_IN_PROJECT": "true"
+  },
+  "remoteEnv": {
+    "PATH": "/workspace/.venv/bin:${containerEnv:PATH}"
+  },
+  "postCreateCommand": "poetry install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "streetsidesoftware.code-spell-checker",
+        "EditorConfig.EditorConfig"
+      ]
     }
   }
+}

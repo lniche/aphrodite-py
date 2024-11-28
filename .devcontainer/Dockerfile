@@ -1,24 +1,17 @@
-ARG RUBY_VERSION=3.3.5
-FROM ruby:${RUBY_VERSION}-slim-bullseye
-
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    apt-utils \
-    build-essential \
-    curl \
-    git \
-    imagemagick \
-    iproute2 \
-    libpq-dev \
-    openssh-client \
-    postgresql-client \
-    vim
-
-RUN gem install bundler
-RUN gem install foreman
-
-# Install Node.js 20
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+FROM python:3.12-slim
 
 WORKDIR /workspace
+
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    git \
+    curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["/bin/bash"]
