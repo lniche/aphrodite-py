@@ -10,7 +10,7 @@
   "remoteEnv": {
     "PATH": "/workspace/.venv/bin:${containerEnv:PATH}"
   },
-  "postCreateCommand": "poetry install",
+  "postCreateCommand": "pip install -r requirements.txt",
   "customizations": {
     "vscode": {
       "extensions": [
