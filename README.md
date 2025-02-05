@@ -1,6 +1,6 @@
-# Aphrodite FsatAPI Scaffold
+# Aphrodite FastAPI Scaffold
 
-[English](README.md) | [简体中文](README-zh.md)
+[English](README.md) | [简体中文](README-zh.md) | [日本語](README-ja)
 
 Aphrodite is a template project based on [Fastapi-skeleton](https://github.com/kaxiluo/fastapi-skeleton) to help developers get started quickly and gain a deep understanding of the framework's usage process. The project provides comprehensive sample code and configuration, covering common development scenarios for easy learning and practice. In addition, Aphrodite also includes container deployment templates, making the project easy to deploy and manage in a modern cloud environment, helping developers to efficiently build and release applications.
 
@@ -67,7 +67,7 @@ mv .env.example .env
 pip install -r requirements.txt
 
 # 4. Initialize the database
-database/init.sql
+database/migrations/V1.0.0__initial_schema.sql
 
 # 5. Start the service
 uvicorn main:app
@@ -76,25 +76,6 @@ uvicorn main:app
 ## Repo Activity
 
 ![Alt](https://repobeats.axiom.co/api/embed/57c3b523ffb088038484a6b3883890a2615b3fa5.svg "Repobeats analytics image")
-
-## Contribution
-
-If you have any suggestions or ideas, please create an Issue or submit a Pull Request directly.
-
-1. **Fork** this repository.
-2. **Create** a new branch: 
-```
-git checkout -b feature/your-feature
-```
-3. **Commit** your changes: 
-```
-git commit -m 'Add new feature'
-```
-4. **Push** to your branch: 
-```
-git push origin feature/your-feature
-```
-5. **Submit** a Pull Request.
 
 ## License
 
